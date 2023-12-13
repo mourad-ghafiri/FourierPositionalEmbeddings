@@ -13,11 +13,9 @@ class MyModel(nn.Module):
 
     def forward(self, inputs):
         t = torch.linspace(0, 1, self.d_model).requires_grad_(False)
-        signals = []
         signal = torch.zeros(self.d_model)
         for position, input in enumerate(inputs):
             p = torch.log(1 + torch.tensor(position).requires_grad_(False))
-            signals.append(torch.sin(2 * torch.pi * input * (t + p)))
             signal += torch.sin(2 * torch.pi * input * (t + p))
         signal = signal.requires_grad_(False)
         x = self.w1(signal)
